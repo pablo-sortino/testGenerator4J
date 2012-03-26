@@ -1,0 +1,9 @@
+*~*
+*.orig
+*.class
+classpath
+.settings
+*stacktrace
+.classpath
+.project
+bin/*
