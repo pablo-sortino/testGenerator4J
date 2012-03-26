@@ -1,0 +1,70 @@
+---------- Para ejecutar desde el debug en eclipse (clase a debuguear classdoc) [Generator.classdoc.classdoc]
+-docpath /home/psortino/personal/TESIS/PersonasApp.jar
+-d personasAPP.tests
+-doclet generator.code.DocletTestGenerator
+-verbose
+
+* Agregar /home/psortino/personal/TESIS/PersonasApp.jar al classpath (desde donde agregamos la condifuracion anterior).
+
+
+---------- url con el applet de jiceengine
+http://jicengine.sourceforge.net/shellapplet-2.1/index.html
+
+---------- Para compilar una clase
+~/devel/testGenerator4J/Prueba.tests$ javac -cp ../lib/junit-4.5.jar:../../Prueba.jar:../bin/:. Prueba001Test.java 
+
+---------- Para ejecutar
+~/devel/testGenerator4J/Prueba.tests$ java -cp ../lib/junit-4.5.jar:../../Prueba.jar:../bin/:. PackageTestSuite
+
+
+
+======================================================================================================
+DEMO (linux)
+
+cd /home/psortino/personal/TESIS/testGenerator4J
+
+--- para generar los archivos de prueba
+./testGenerator4J-build.sh ../PersonasApp.jar
+
+--- Genero entre otros archivos los siguiente (..\PersonasApp.tests:
+	- class_list.txt -> Lista de clases que se testearan.
+	- method_list_ClasePruebaTest.txt -> Metodos de la clase ClasePruebaTest que se testearan.
+	- method_list_PersonaTest.txt -> Metodos de la clase PersonaTest que se testearan.
+	- data.xml -> contiene los datos de entrada y de salida de cada test.
+	- PackageTestSuite -> Es la clase que dispara todos los test que se ejecutarán.
+
+--- Para ejecutar 
+testGenerator4J-run.sh ..\PersonasApp.jar
+
+-- 1ro falla, porque no pasan los tests. no tenemos valores de entradas o asserts correctos en data.xml
+	- Comentar la clase PersonaTest en class_list.txt (porque no queremos ejecutar los tests)
+	- Copiar archivo data.xml de "PersonasApp.tests-DEMO" con los valores para las pruebas
+		cp PersonasApp.tests-DEMO/data.xml PersonasApp.tests/
+
+-- 2do, Volvemos a ejecutar (testGenerator4J-run.sh ..\PersonasApp.jar)
+	- OK
+	- Solamente se ejecutaron los test de la clase "ClasePruebaTest"
+
+======================================================================================================
+DEMO (windows) [no funciona]
+
+cd D:\psortino\devel\javaProjects\testGenerator4J
+
+--- para generar los archivos de prueba
+testGenerator4J-build.bat ..\Encriptador.jar
+
+--- Genero entre otros archivos los siguiente (..\Encriptador.jar.tests:
+	- class_list.txt -> Lista de clases que se testearan.
+	- method_list_EncrypterUtilTest.txt -> Metodos de la clase EncrypterUtilTest que se testearan.
+	- method_list_MainTest.txt -> Metodos de la clase MainTest que se testearan.
+	- data.xml -> contiene los datos de entrada y de salida de cada test.
+	- PackageTestSuite -> Es la clase que dispara todos los test que se ejecutarán.
+
+--- Para ejecutar 
+testGenerator4J-run.bat ..\Encriptador.jar
+
+--- Comentar la clase MainTest en class_list.txt
+
+--- Copiar archivo data.xml con los valores para las pruebas 
+
+======================================================================================================
