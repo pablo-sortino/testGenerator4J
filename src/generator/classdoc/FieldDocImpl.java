@@ -41,7 +41,7 @@ class FieldDocImpl extends MemberDocImpl implements FieldDoc
    */
   protected void getUsedClasses(Hashtable h) // overwrites ProgramElementDocImpl.getUsedClasses()
   {
-    h.put(type(),classdoc.DUMMY);
+    h.put(type(),DocletImpl.DUMMY);
       // type() returns Type, which is an interface
       // implemented by ClassDocImpl, so when getting data
       // out of the hashtable, the cast to ClassDocImpl will succeed

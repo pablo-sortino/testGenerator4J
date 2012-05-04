@@ -8,6 +8,8 @@ package generator.classdoc;
 
 import com.sun.javadoc.*;
 
+import generator.SimpleLogger;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -139,7 +141,7 @@ class PackageDocImpl extends DocImpl implements PackageDoc
   public ClassDoc[] allClasses(boolean ac)
   {
   	ClassDoc[] cd=new ClassDoc[classDocs.size()];
-    classdoc.hashtable2array(classDocs,cd);
+    DocletImpl.hashtable2array(classDocs,cd);
     return cd;
   }
   /**
@@ -150,9 +152,9 @@ class PackageDocImpl extends DocImpl implements PackageDoc
   public ClassDoc[] ordinaryClasses()
   {
     Object[] cd=allClasses();
-    cd=classdoc.minusArray(cd,exceptions());
-    cd=classdoc.minusArray(cd,errors());
-    cd=classdoc.minusArray(cd,interfaces());
+    cd=DocletImpl.minusArray(cd,exceptions());
+    cd=DocletImpl.minusArray(cd,errors());
+    cd=DocletImpl.minusArray(cd,interfaces());
     ClassDoc[] c=new ClassDoc[cd.length];
     for (int i=0;i<c.length;i++)
     {
@@ -177,7 +179,7 @@ class PackageDocImpl extends DocImpl implements PackageDoc
   public ClassDoc[] allClasses()
   {
     ClassDoc[] cd=new ClassDoc[classDocs.size()];
-    classdoc.hashtable2array(classDocs,cd);
+    DocletImpl.hashtable2array(classDocs,cd);
     return cd;
   }
 
@@ -241,7 +243,7 @@ class PackageDocImpl extends DocImpl implements PackageDoc
     }
     catch (Exception e)
     {
-      classdoc.error("cannot filter classes on method "+filterMethod,e);
+      SimpleLogger.error("cannot filter classes on method "+filterMethod,e);
       return null;
     }
   }

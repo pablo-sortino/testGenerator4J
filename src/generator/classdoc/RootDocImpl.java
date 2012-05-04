@@ -8,6 +8,8 @@ package generator.classdoc;
 
 import com.sun.javadoc.*;
 
+import generator.SimpleLogger;
+
 import java.io.*;
 import java.util.*;
 
@@ -18,7 +20,7 @@ import java.util.*;
  * @author Jens Gulden - <a href="http://www.jensgulden.de/" target="_top">www.jensgulden.de</a>
  * @version 1.0
  */
-class RootDocImpl extends DocImpl implements RootDoc
+public class RootDocImpl extends DocImpl implements RootDoc
 {
   /**
    * Pre-parsed command line arguments.
@@ -39,7 +41,7 @@ class RootDocImpl extends DocImpl implements RootDoc
   /**
    * Initialize this.
    */
-  void init(String name,String[] specifiedClasses,String[][] args)
+  public void init(String name,String[] specifiedClasses,String[][] args)
   {
     this.specifiedClasses = specifiedClasses;
     super.init(name);
@@ -48,7 +50,7 @@ class RootDocImpl extends DocImpl implements RootDoc
     for (int i=0;i<specifiedClasses.length;i++)
     {
       String className = specifiedClasses[i];
-      String packageName = classdoc.packageName(className);
+      String packageName = DocletImpl.packageName(className);
       if (specifiedPackages.get(packageName) == null) // not yet registered
       {
         specifiedPackages.put(packageName,new Object());
@@ -159,7 +161,7 @@ class RootDocImpl extends DocImpl implements RootDoc
    */
   public void printWarning(String s)
   {
-    classdoc.printWarningS(s);
+	  SimpleLogger.printWarningS(s);
   }
 
   /**
@@ -167,7 +169,7 @@ class RootDocImpl extends DocImpl implements RootDoc
    */
   public void printError(String s)
   {
-    classdoc.printErrorS(s);
+	  SimpleLogger.printErrorS(s);
   }
 
   /**
@@ -175,7 +177,7 @@ class RootDocImpl extends DocImpl implements RootDoc
    */
   public void printNotice(String s)
   {
-    classdoc.printNoticeS(s);
+    SimpleLogger.printNoticeS(s);
   }
 
 /* (non-Javadoc)

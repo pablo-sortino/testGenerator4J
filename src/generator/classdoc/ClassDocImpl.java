@@ -12,6 +12,8 @@ import com.sun.javadoc.Type;
 import com.sun.javadoc.TypeVariable;
 import com.sun.javadoc.WildcardType;
 
+import generator.SimpleLogger;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -246,7 +248,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       catch (Throwable t)
       {
         // class cannot be found or loaded
-        classdoc.printWarningS("cannot load class "+classname+" - using dummy");
+    	  SimpleLogger.printWarningS("cannot load class "+classname+" - using dummy");
         _class=null; // mark this as invalid
       }
      //System.out.println("SpikeTestGen Warning: Classdoc cannot load Null Class "+classname);
@@ -281,7 +283,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
     // initialize this
 
     // get containing package
-    String packageName=classdoc.packageName(qualifiedName());
+    String packageName=DocletImpl.packageName(qualifiedName());
     packageDoc=PackageDocImpl.get(packageName);
     if ((packageName.length()>0)||!isPrimitive()) // if package is "", avoid primitive types to appear there
     {
@@ -295,7 +297,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       Vector fieldsV=new Vector();
       for (int i=0;i<f.length;i++)
       {
-        if (classdoc.matchModifiers(f[i].getModifiers()))
+        if (DocletImpl.matchModifiers(f[i].getModifiers()))
         {
           FieldDocImpl field=new FieldDocImpl();
           field.init(f[i],this);
@@ -310,7 +312,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       Vector constructorsV=new Vector();
       for (int i=0;i<cc.length;i++)
       {
-        if (classdoc.matchModifiers(cc[i].getModifiers()))
+        if (DocletImpl.matchModifiers(cc[i].getModifiers()))
         {
           ConstructorDocImpl constructor=new ConstructorDocImpl();
           constructor.init(cc[i],this);
@@ -325,7 +327,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       Vector methodsV=new Vector();
       for (int i=0;i<mm.length;i++)
       {
-        if (classdoc.matchModifiers(mm[i].getModifiers()))
+        if (DocletImpl.matchModifiers(mm[i].getModifiers()))
         {
           MethodDocImpl method=new MethodDocImpl();
           method.init(mm[i],this);
@@ -341,7 +343,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       classesHash=new Hashtable();
       for (int i=0;i<cl.length;i++)
       {
-        if (classdoc.matchModifiers(cl[i].getModifiers()))
+        if (DocletImpl.matchModifiers(cl[i].getModifiers()))
         {
           String cn=getClassName(cl[i]);
           ClassDocImpl innerClass=get(cn,this); // inner class with this as outer class
@@ -460,7 +462,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       for (int i=0;i<cl.length;i++)
       {
 	//System.out.println("calvin: interface"+cl[i].qualifiedName());
-        h.put(cl[i].qualifiedName(),classdoc.DUMMY);
+        h.put(cl[i].qualifiedName(),DocletImpl.DUMMY);
       }
     }
   }
@@ -495,7 +497,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
    */
   public String name() // overwrites DocImpl.qualifiedName()
   {
-    String s=classdoc.unqualify(name);
+    String s=DocletImpl.unqualify(name);
     // if class could not be loaded, mark as dummy
     if (_class==null)
     {
@@ -634,7 +636,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
     //System.out.println("Hashtable size on top: "+h.size()+" Number of Classes: "+cd.length);
     for (int i=0;i<cd.length;i++)
     {
-      h.put(cd[i].containingPackage(),classdoc.DUMMY); // auto-avoid doubles by using hashtable
+      h.put(cd[i].containingPackage(),DocletImpl.DUMMY); // auto-avoid doubles by using hashtable
     }
     // ready to copy results into array
     PackageDocImpl[] r=new PackageDocImpl[h.size()];
@@ -680,7 +682,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
     for (Enumeration ef=h.keys();ef.hasMoreElements();)
     {
       Object name=ef.nextElement();
-      if (h.get(name) == classdoc.DUMMY)
+      if (h.get(name) == DocletImpl.DUMMY)
       {
         h.remove(name);
       }
@@ -773,7 +775,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
    */
   public String typeName()
   {
-    return classdoc.unqualify(qualifiedTypeName());
+    return DocletImpl.unqualify(qualifiedTypeName());
   }
 
   /**
@@ -791,7 +793,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
    */
   public String dimension()
   {
-    return classdoc.repeat("[]",dimension);
+    return DocletImpl.repeat("[]",dimension);
   }
 
   /**
@@ -918,14 +920,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
    */
   public boolean isPublic() // overwrites ProgramElementDoc.isPublic()
   {
-    if (!classdoc.fakepublic)
-    {
-      return super.isPublic();
-    }
-    else // fake public if class this class should be documented
-    {
-      return classdoc.matchModifiers(this.modifierSpecifier());
-    }
+    return DocletImpl.matchModifiers(this.modifierSpecifier());
   }
 
   /**
@@ -972,7 +967,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
         }
         else
         {
-          classdoc.error("cannot get outer class of class "+qualifiedName());
+        	SimpleLogger.error("cannot get outer class of class "+qualifiedName());
           return null;
         }
       }
@@ -1025,7 +1020,7 @@ class ClassDocImpl extends ProgramElementDocImpl implements ClassDoc, Type
       dim++;
       c=c.getComponentType();
     }
-    String cn=c.getName()+classdoc.repeat("[]",dim);
+    String cn=c.getName()+DocletImpl.repeat("[]",dim);
     return cn;
   }
 

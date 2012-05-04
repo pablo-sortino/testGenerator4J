@@ -46,7 +46,7 @@ class ExecutableMemberDocImpl extends MemberDocImpl implements ExecutableMemberD
     Parameter[] p=parameters();
     for (int i=0;i<p.length;i++)
     {
-      h.put(p[i].type(),classdoc.DUMMY); // Note:
+      h.put(p[i].type(),DocletImpl.DUMMY); // Note:
         // type() returns Type, which is an interface
         // implemented by ClassDocImpl, so when getting data
         // out of the hashtable, the cast to ClassDocImpl will succeed
@@ -54,7 +54,7 @@ class ExecutableMemberDocImpl extends MemberDocImpl implements ExecutableMemberD
     ClassDoc[] c=thrownExceptions();
     for (int i=0;i<c.length;i++)
     {
-      h.put(c[i],classdoc.DUMMY);
+      h.put(c[i],DocletImpl.DUMMY);
     }
   }
 

@@ -44,7 +44,7 @@ class ParameterImpl implements Parameter
     Hashtable numbernames=new Hashtable();
     for (int i=0;i<c.length;i++)
     {
-      String cn=classdoc.unqualify(ClassDocImpl.getClassNameNoDimensions(c[i]));
+      String cn=DocletImpl.unqualify(ClassDocImpl.getClassNameNoDimensions(c[i]));
       // make short name from all upper case letters in name (then converted to lower case)
       String n="";
       for (int j=0;j<cn.length();j++)
@@ -231,7 +231,7 @@ class ParameterImpl implements Parameter
    */
   private String flatSignature()
   {
-    return classdoc.unqualify(typeName());
+    return DocletImpl.unqualify(typeName());
   }
 
 public AnnotationDesc[] annotations() {

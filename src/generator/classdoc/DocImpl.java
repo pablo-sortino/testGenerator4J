@@ -46,7 +46,7 @@ class DocImpl implements Doc
    */
   public String name()
   {
-    return classdoc.unqualify(name);
+    return DocletImpl.unqualify(name);
   }
   
   /**

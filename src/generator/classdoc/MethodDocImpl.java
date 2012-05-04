@@ -42,7 +42,7 @@ class MethodDocImpl extends ExecutableMemberDocImpl implements MethodDoc
   protected void getUsedClasses(Hashtable h) // overwrites ProgramElementDocImpl.getUsedClasses()
   {
     super.getUsedClasses(h); // parameter types
-    h.put(returnType(),classdoc.DUMMY); // Note:
+    h.put(returnType(),DocletImpl.DUMMY); // Note:
       // returnType() returns object of type Type, which is an interface
       // implemented by ClassDocImpl, so when getting data
       // out of the hashtable, the cast to ClassDocImpl will succeed

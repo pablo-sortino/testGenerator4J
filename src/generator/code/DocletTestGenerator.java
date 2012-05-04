@@ -83,7 +83,7 @@ public class DocletTestGenerator {
 			classes = packageDoc.ordinaryClasses();
 			if ((classes.length > 0) && (!alreadyCreatedClassTestSuite)) {
 				alreadyCreatedClassTestSuite = true;
-				ptsGenerator.startClassTestSuite(outputDIR, packageDocs, "PackageTestSuite");
+				ptsGenerator.generate(outputDIR, packageDocs, "PackageTestSuite");
 			}
 			try {
 				classGenerator.generate(outputDIR, classes);

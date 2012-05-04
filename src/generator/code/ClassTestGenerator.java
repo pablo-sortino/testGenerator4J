@@ -1,5 +1,7 @@
 package generator.code;
 
+import generator.SimpleLogger;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,9 +21,9 @@ public class ClassTestGenerator {
 			if ((classDoc.isAbstract()) || (classDoc.isInterface())
 					|| (!classDoc.isPublic())
 					|| (classDoc.toString().indexOf("$") != -1)) {
-				log("Exluding from generation class: " + originalClassName);
+				SimpleLogger.log("Exluding from generation class: " + originalClassName);
 			} else {
-				log("Generating test for class: " + originalClassName);
+				SimpleLogger.log("Generating test for class: " + originalClassName);
 				String testClassName =  creatClassTestName(originalClassName);
 				createMethodsListFile(outputDIR, testClassName);
 				generateTestClass(outputDIR, originalClassName, testClassName, classDoc);
@@ -487,18 +489,18 @@ public class ClassTestGenerator {
     	return false;
     }
     
-    public String createMethodTestName(final String originalMethodName, final int number){
+    private String createMethodTestName(final String originalMethodName, final int number){
     	return createMethodTestName(originalMethodName + number);
     }
     
-    public String createMethodTestName(final String originalMethodName){
+    private String createMethodTestName(final String originalMethodName){
     	String testMethodName = "test" 
     		+ (""+originalMethodName.charAt(0)).trim().toUpperCase()
     		+ originalMethodName.substring(1);
     	return testMethodName;
     }
     
-    public String creatClassTestName(final String originalClassName){
+    private String creatClassTestName(final String originalClassName){
     	return originalClassName + "Test";
     }
 	
@@ -523,7 +525,7 @@ public class ClassTestGenerator {
      * @throws IOException
      *                          Throws IOException.
      */
-    public final void generateMethodTestData(final String outputDIR, final String originalClassName, final String testClassName,
+    private final void generateMethodTestData(final String outputDIR, final String originalClassName, final String testClassName,
 			final MethodDoc methodDoc) throws IOException {
 
     	String originalMethodName = methodDoc.name();
@@ -617,8 +619,5 @@ public class ClassTestGenerator {
 		b.append("\t\t\t\t\t</jice>\n");
 		return b.toString();
 	}
-	
-	public static void log(String msg) {
-		System.out.println(msg);
-	}
+
 }

@@ -4,7 +4,7 @@
 -doclet generator.code.DocletTestGenerator
 -verbose
 
-* Agregar /home/psortino/personal/TESIS/PersonasApp.jar al classpath (desde donde agregamos la condifuracion anterior).
+* Agregar /home/psortino/personal/TESIS/PersonasApp.jar al classpath (desde donde agregamos la configuracion anterior).
 
 
 ---------- url con el applet de jiceengine
@@ -26,7 +26,7 @@ cd /home/psortino/personal/TESIS/testGenerator4J
 --- para generar los archivos de prueba
 ./testGenerator4J-build.sh ../PersonasApp.jar
 
---- Genero entre otros archivos los siguiente (..\PersonasApp.tests:
+--- Genero entre otros archivos los siguiente (PersonasApp.tests):
 	- class_list.txt -> Lista de clases que se testearan.
 	- method_list_ClasePruebaTest.txt -> Metodos de la clase ClasePruebaTest que se testearan.
 	- method_list_PersonaTest.txt -> Metodos de la clase PersonaTest que se testearan.
@@ -34,14 +34,15 @@ cd /home/psortino/personal/TESIS/testGenerator4J
 	- PackageTestSuite -> Es la clase que dispara todos los test que se ejecutarán.
 
 --- Para ejecutar 
-testGenerator4J-run.sh ..\PersonasApp.jar
+./testGenerator4J-run.sh ../PersonasApp.jar
 
 -- 1ro falla, porque no pasan los tests. no tenemos valores de entradas o asserts correctos en data.xml
-	- Comentar la clase PersonaTest en class_list.txt (porque no queremos ejecutar los tests)
+	- Comentar la clase PersonaTest en class_list.txt (porque no queremos ejecutar los tests de la clase Persona)
+		cp ../PersonasApp.tests-DEMO/class_list.txt PersonasApp.tests/
 	- Copiar archivo data.xml de "PersonasApp.tests-DEMO" con los valores para las pruebas
-		cp PersonasApp.tests-DEMO/data.xml PersonasApp.tests/
+		cp ../PersonasApp.tests-DEMO/data.xml PersonasApp.tests/
 
--- 2do, Volvemos a ejecutar (testGenerator4J-run.sh ..\PersonasApp.jar)
+-- 2do, Volvemos a ejecutar (./testGenerator4J-run.sh ../PersonasApp.jar)
 	- OK
 	- Solamente se ejecutaron los test de la clase "ClasePruebaTest"
 

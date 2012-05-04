@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class PackageTestSuiteGenerator {
 
-	public void startClassTestSuite(final String outputDIR,
+	public void generate(final String outputDIR,
 			final PackageDoc[] pkgNames, final String suiteName) {
         
 		String fileName = suiteName + ".java";
